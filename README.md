@@ -1,4 +1,4 @@
-🧩 Mini Full-Stack Search Application
+🧩 **MINI FULL-STACK SEARCH APPLICATION**
 
 Author: Ansh Srivastava
 Version: 1.0
@@ -8,7 +8,7 @@ A compact, full-stack search app built with Next.js, TypeScript, and Tailwind CS
 Implements a POST /api/search endpoint that retrieves top matches from a local dataset, featuring keyword scoring, debounce, loading/empty states, and clean UI integration.
 
 
-🎯 ObjOBJECTIVES & GOALS
+🎯 OBJECTIVES & GOALS
 - Return relevant search results based on case-insensitive keyword scoring.
 - Limit output to top 3 results, ordered by relevance.
 - Handle empty queries (400) and no-match cases gracefully.
@@ -84,16 +84,16 @@ Response:
 
 
 
-🚀 FEATURES
+## 🚀 Features
 
-✅ Full-stack architecture (Next.js App Router)
-✅ Backend POST API with keyword scoring
-✅ Frontend integration using Fetch API
-✅ Real-time search with debounce
-✅ Initial load & loading indicator
-✅ Local dataset (no external DBs)
-✅ Clear error handling & response states
-✅ Ready for deployment on Vercel / Netlify
+- ✅ **Full-stack architecture** built with **Next.js (App Router)**  
+- ✅ **Backend POST API** implementing simple keyword-based scoring  
+- ✅ **Frontend integration** using the **Fetch API** for dynamic updates  
+- ✅ **Real-time search** functionality with **debounce** optimization  
+- ✅ **Initial load** display with **loading indicator** for better UX  
+- ✅ **Local dataset** (`data/data.ts`) — no external databases required  
+- ✅ **Clear error handling** and user-friendly response states  
+- ✅ **Ready for deployment** on **Vercel** or **Netlify**
 
 
 ## 🧱 Tech Stack & Architecture
@@ -120,18 +120,18 @@ Response:
 - **Execution Environment:** Node.js runtime on port `3000`
 
 
-**High-Level Architecture (System Flow)**
+## 🧩 High-Level Architecture
 
 [Frontend: app/page.tsx]
-     |
-     | fetch("/api/search", { method: "POST", body: { query } })
-     v
+        │
+        │  fetch("/api/search", { method: "POST", body: { query } })
+        ▼
 [Backend: app/api/search/route.ts]
-     |  loads → data/data.ts
-     |  scoring, sort, slice → top 3
-     v
- JSON ← results, summary?, sources?
-
+        │
+        │  loads → data/data.ts
+        │  scoring, sort, slice → top 3
+        ▼
+JSON ← results, summary?, sources?
 
 
 ## 🗂️ Folder Structure
@@ -170,7 +170,8 @@ fullstack-search-app/
 │
 ├─ screenshots/                  # App verification & testing screenshots
 │
-└─ technical_project_details.pdf # Complete technical report (Task A)
+└─ technical_project_details.pdf # Complete technical report
+
 
 
 
