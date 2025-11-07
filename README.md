@@ -252,7 +252,7 @@ curl -X POST http://localhost:3000/api/search \
 ## 🚀 Deployment (Vercel)
 
 ### 1️⃣ Push Project to GitHub
-```bash
+
 git add .
 git commit -m "Initial commit: Mini Full-Stack Search App"
 git push origin main
