@@ -49,11 +49,9 @@ git clone https://github.com/anshwysmc/mini-fullstack-search-app.git
 cd mini-fullstack-search-app
 
 3️⃣ Install Dependencies
-
 npm install
 
 4️⃣ Run Development Server
-
 npm run dev
 
 Then visit: http://localhost:3000/
