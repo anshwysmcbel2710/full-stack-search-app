@@ -133,6 +133,7 @@ Response:
  JSON ← results, summary?, sources?
 
 
+
 ## 🗂️ Folder Structure
 
 fullstack-search-app/
@@ -169,10 +170,11 @@ fullstack-search-app/
 │
 ├─ screenshots/                  # App verification & testing screenshots
 │
-└─ technical_project_details.pdf # Complete technical report
+└─ technical_project_details.pdf # Complete technical report (Task A)
 
 
-🛠️ WorWORKFLOW & IMPLEMENTATION
+
+🛠️ WORKFLOW & IMPLEMENTATION
 
 Step 1 — Create Project
 npx create-next-app@latest mini-search --typescript
@@ -187,6 +189,7 @@ Step 3 — Add Dataset
 
 Step 4 — Add API Logic
 /app/api/search/route.ts
+
 
 
 🧠 Implementation Highlights
