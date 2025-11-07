@@ -169,7 +169,7 @@ fullstack-search-app/
 │
 ├─ screenshots/                  # App verification & testing screenshots
 │
-└─ technical_project_details.pdf # Complete technical report (Task A)
+└─ technical_project_details.pdf # Complete technical report
 
 
 🛠️ WorWORKFLOW & IMPLEMENTATION
