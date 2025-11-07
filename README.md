@@ -222,7 +222,6 @@ Step 4 — Add API Logic
 - Network tab (DevTools) to inspect `/api/search` payloads and responses  
 
 **Command Example:**
-```bash
 curl -X POST http://localhost:3000/api/search \
   -H "Content-Type: application/json" \
   -d '{"query":"trust"}'
