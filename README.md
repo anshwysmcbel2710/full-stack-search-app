@@ -205,7 +205,7 @@ git push origin main
 |-------------|-------------|
 | **Install dependencies** | `npm install` |
 | **Run dev server** | `npm run dev` |
-| **API test** | `curl -X POST http://localhost:3000/api/search -H "Content-Type: application/json" -d '{"query":"trust"}'` |
+| **API test** | `curl -X POST http://localhost:3000/api/search -H "Content-Type: application/json" -d "{\"query\":\"Trust\"}"` |
 | **Access in browser** | [http://localhost:3000](http://localhost:3000) |
 
 ---
