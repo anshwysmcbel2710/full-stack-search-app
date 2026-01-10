@@ -1,310 +1,464 @@
-🧩 **MINI FULL-STACK SEARCH APPLICATION**
-
-Author: Ansh Srivastava
-Version: 1.0
-Date: November 2025
-
-A compact, full-stack search app built with Next.js, TypeScript, and Tailwind CSS.
-Implements a POST /api/search endpoint that retrieves top matches from a local dataset, featuring keyword scoring, debounce, loading/empty states, and clean UI integration.
-
-
-🎯 OBJECTIVES & GOALS
-- Return relevant search results based on case-insensitive keyword scoring.
-- Limit output to top 3 results, ordered by relevance.
-- Handle empty queries (400) and no-match cases gracefully.
-- Display a single-page UI with loading, empty, and error states.
-- Bonus: Return summary and sources array in JSON.
-
-
-✅ Acceptance Criteria
-- "trust badges" returns id: 1 as the top result.
-- Max 3 items, ordered by relevance.
-- Empty query → 400 Bad Request.
-- No matches → empty array + friendly message.
-
-
-## 💻 Prerequisites
-
-| **Requirement** | **Value** |
-|------------------|-----------|
-| **OS** | Windows 10/11 (tested) |
-| **Node.js** | v18+ (tested with v22.19.0) |
-| **npm** | ≥9 (tested with 10.9.3) |
-| **Packages** | Installed via `create-next-app` |
-| **Ports** | 3000 |
-| **Env Vars** | None required |
-| **Hardware** | Any modern laptop/desktop |
-
-
-⚙️ INSTALLATION & SETUP
-
-1️⃣ Prerequisites
-- Node.js ≥ 18 (tested with v22.19.0)
-- npm ≥ 9 (tested with v10.9.3)
-- Git & VS Code recommended
-
-2️⃣ Clone Repository
-
-git clone https://github.com/anshwysmc/mini-fullstack-search-app.git
-cd mini-fullstack-search-app
-
-3️⃣ Install Dependencies
-npm install
-
-4️⃣ Run Development Server
-npm run dev
-
-Then visit: http://localhost:3000/
-
-
-🔗 API DOCUMENTATION
-
-Endpoint: POST /api/search
-
-Body:
-{ "query": "trust" }
-
-Response:
-{
-  "results": [
-    { "id": "1", "title": "Trust badges near CTA", "body": "..." }
-  ],
-  "sources": ["1"],
-  "summary": "Trust badges near CTA"
-}
-
-
-### 🔢 Status Codes
-
-| **Code** | **Meaning**      |
-|-----------|------------------|
-| **200**   | Success          |
-| **400**   | Empty query      |
-| **500**   | Server error     |
-
-
-
-## 🚀 Features
-
-- ✅ **Full-stack architecture** built with **Next.js (App Router)**  
-- ✅ **Backend POST API** implementing simple keyword-based scoring  
-- ✅ **Frontend integration** using the **Fetch API** for dynamic updates  
-- ✅ **Real-time search** functionality with **debounce** optimization  
-- ✅ **Initial load** display with **loading indicator** for better UX  
-- ✅ **Local dataset** (`data/data.ts`) — no external databases required  
-- ✅ **Clear error handling** and user-friendly response states  
-- ✅ **Ready for deployment** on **Vercel** or **Netlify**
-
-
-## 🧱 Tech Stack & Architecture
-
-| **Layer**      | **Technology** |
-|----------------|----------------|
-| **Frontend**   | Next.js 16, TypeScript (preferred), Tailwind CSS |
-| **Backend**    | Next.js API Routes (Node.js runtime, App Router) |
-| **Data**       | Local file `data/data.ts` (JSON array) |
-| **Styling**    | Tailwind CSS with global styles in `app/globals.css` |
-| **Dev Tools**  | VS Code, npm, Git, PowerShell |
-| **Environment**| Node.js v22+, npm v10+ |
-
----
-
-
-
-
-🛠️ WORKFLOW & IMPLEMENTATION
-
-Step 1 — Create Project
-npx create-next-app@latest mini-search --typescript
-cd mini-search
-npm i
-
-Step 2 — Run Dev Server
-npm run dev
-
-Step 3 — Add Dataset
-/data/data.ts
-
-Step 4 — Add API Logic
-/app/api/search/route.ts
-
-
-
-🧠 Implementation Highlights
-- Frontend: Fetches API data via fetch('/api/search')
-- Backend: Filters dataset using simple keyword scoring (case-insensitive)
-- Debounce: Prevents unnecessary API calls on every keystroke
-- Initial Load: Displays all items on startup
-
-
-## 🧪 Testing & Validation
-
-| **Test** | **Expected Result** |
-|-----------|---------------------|
-| **Initial Load** | All 5 dataset items are visible when the app loads. |
-| **Search Query “trust”** | Returns item **id: 1** (“Trust badges near CTA”). |
-| **Empty Query** | Displays error message and returns `{ error: "Empty query" }` with HTTP **400**. |
-| **No Match** | Returns `results: []` and shows friendly message “No matches found.” |
-| **Case-Insensitive Search** | Queries like `"FORM"` and `"form"` behave identically. |
-
----
-
-### ✅ Validation Summary
-
-- ✅ **Initial Load:** All dataset items appear correctly in the UI.  
-- ✅ **Valid Search:** `"trust badges"` → item **id 1** returned first.  
-- ✅ **Empty Query:** Returns HTTP 400 with JSON `{ error: "Empty query" }`.  
-- ✅ **No Matches:** `results: []` and `"No matches found."` displayed cleanly.  
-- ✅ **Case-Insensitive:** `"FORM"` and `"form"` produce identical results.  
-
-**Verification Tools:**  
-- Browser UI (manual testing)  
-- cURL requests for API verification  
-- Network tab (DevTools) to inspect `/api/search` payloads and responses  
-
-**Command Example:**
-curl -X POST http://localhost:3000/api/search \
-  -H "Content-Type: application/json" \
-  -d '{"query":"trust"}'
-
-
-## 🧰 Troubleshooting
-
-| **Issue** | **Fix** |
-|------------|----------|
-| **404 on `/api/search`** | Ensure route path = `app/api/search/route.ts` |
-| **405 error** | Sending GET instead of POST — use `curl` or frontend call |
-| **Module not found** | Check `import { ITEMS } from "../../../data/data";` |
-| **Type errors** | Restart TypeScript server or the Next.js dev server |
-
-
-## 🔒 Security
-
-- No `.env` files, secrets, or API keys are used in this project.  
-- No external dependencies or third-party APIs are integrated.  
-- If integrating APIs or databases in the future:  
-  - Store all credentials securely in a `.env` file.  
-  - Access them via `process.env` in the backend.  
-  - **Never commit** `.env` files or sensitive data to version control.  
-
-> 💡 **Best Practice:** Always add `.env` to your `.gitignore` to prevent secret exposure.
-
-
-## 🚀 Deployment (Vercel)
-
-### 1️⃣ Push Project to GitHub
-
-git add .
-git commit -m "Initial commit: Mini Full-Stack Search App"
-git push origin main
-
-
-## ⚡ Quick-Start Cheat Sheet
-
-| **Action** | **Command** |
-|-------------|-------------|
-| **Install dependencies** | `npm install` |
-| **Run dev server** | `npm run dev` |
-| **API test** | `curl -X POST http://localhost:3000/api/search -H "Content-Type: application/json" -d "{\"query\":\"Trust\"}"` |
-| **Access in browser** | [http://localhost:3000](http://localhost:3000) |
-
----
-
-### ✅ Usage Notes
-- Run the above commands **from your project root directory**.
-- Ensure Node.js (v18+) and npm (v9+) are installed.
-- The development server starts automatically on port **3000**.
-- The cURL command helps test the `/api/search` endpoint directly from the terminal.
-
-
-## 📈 PERFORMANCE, SCALING & FUTURE WORK
-
-### ⚙️ Performance & Optimization
-- Use **Fuse.js**, **Lunr.js**, or **Elasticlunr** for large dataset indexing and fast fuzzy search.
-- Implement **debounce (300ms)** in search input to minimize redundant API calls.
-- Add **caching layers** (in-memory or HTTP caching) to reduce repeated processing.
-- Consider **serverless scaling** on **Vercel** for better performance under load.
-
-### 🔍 Enhancements & Features
-- Add **pagination**, **result highlighting**, and **fuzzy matching** for improved UX.
-- Optimize **search scoring and ranking** algorithms for more relevant results.
-- Deploy backend to **serverless environments** (e.g., Vercel Functions, AWS Lambda).
-- Integrate **Jest** for automated unit testing of search logic and ranking.
-
-### 🧩 Maintenance & Future Work
-- Persist data in a lightweight database (**SQLite** or **MongoDB**) instead of in-memory.
-- Implement **CI/CD pipelines** (GitHub Actions or Vercel Deploy Hooks) for automated testing and deployment.
-- Add **analytics and performance metrics** to monitor API response times.
-- Improve **error logging** and structured monitoring for production environments.
-
-
-## 🧠 Key Achievements
-
-- ✅ Full **frontend + backend integration** with seamless communication via API routes.  
-- ✅ Achieved **100% specification compliance** with the Task A rubric.  
-- ✅ Implemented **proper POST request handling** with appropriate HTTP status codes.  
-- ✅ Added **optional `summary` and `sources` fields** in API responses for bonus criteria.  
-- ✅ Integrated **debounce (300ms)** and **loading UX** for smooth search experience.  
-- ✅ Maintained **clean, modular, and industry-standard code structure** across frontend and backend.  
-
----
-
-
-## 🧩 High-Level Architecture
-
-```text
-[Frontend: app/page.tsx]
-        │
-        │  fetch("/api/search", { method: "POST", body: { query } })
-        ▼
-[Backend: app/api/search/route.ts]
-        │
-        │  loads → data/data.ts
-        │  scoring, sort, slice → top 3
-        ▼
-JSON ← results, summary?, sources?
-
-
-
-## 🗂️ Folder Structure
-
-fullstack-search-app/
-├─ .next/                        # Next.js build and cache files
-│  ├─ dev/                       # Development build output
-│  └─ types/                     # Type definitions generated by Next.js
+<div class="section">
+<h1>🏷️ Project Title</h1>
+<p><strong>NextJS Full-Stack Search Application</strong><br>
+
+</div>
+
+<div class="section">
+<h1>🧾 Executive Summary</h1>
+<p>
+This project implements a production-grade, client-server search system built on the Next.js App Router.
+It provides a POST-based API endpoint that performs deterministic keyword relevance scoring against
+a structured dataset stored in <strong>data/data.ts</strong> and returns ranked results, summaries, and source references.
+The UI implements debounced real-time querying, loading states, empty-state handling, and API-driven rendering.
+The architecture is fully serverless-compatible and optimized for deployment on Vercel or any Node.js edge runtime.
+</p>
+</div>
+
+<div class="section">
+<h1>📑 Table of Contents</h1>
+<ul>
+<li>🏷️ Project Title</li>
+<li>🧾 Executive Summary</li>
+<li>📑 Table of Contents</li>
+<li>🧩 Project Overview</li>
+<li>🎯 Objectives & Goals</li>
+<li>✅ Acceptance Criteria</li>
+<li>💻 Prerequisites</li>
+<li>⚙️ Installation & Setup</li>
+<li>🔗 API Documentation</li>
+<li>🖥️ UI / Frontend</li>
+<li>🔢 Status Codes</li>
+<li>🚀 Features</li>
+<li>🧱 Tech Stack & Architecture</li>
+<li>🛠️ Workflow & Implementation</li>
+<li>🧪 Testing & Validation</li>
+<li>🔍 Validation Summary</li>
+<li>🧰 Verification Testing Tools</li>
+<li>🧯 Troubleshooting & Debugging</li>
+<li>🔒 Security & Secrets</li>
+<li>☁️ Deployment</li>
+<li>⚡ Quick-Start Cheat Sheet</li>
+<li>🧾 Usage Notes</li>
+<li>🧠 Performance & Optimization</li>
+<li>🌟 Enhancements & Features</li>
+<li>🧩 Maintenance & Future Work</li>
+<li>🏆 Key Achievements</li>
+<li>🧮 High-Level Architecture</li>
+<li>🗂️ Project Structure</li>
+<li>🧭 How to Demonstrate Live</li>
+<li>💡 Summary, Closure & Compliance</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🧩 Project Overview</h1>
+<p>
+The application consists of a browser-based UI (<strong>app/page.tsx</strong>) and a server-side
+search service (<strong>app/api/search/route.ts</strong>).
+Users submit a search query which is validated, normalized, scored against all records in the dataset,
+sorted by relevance, and returned as a ranked JSON payload. The UI renders the response dynamically
+using fetch-based asynchronous calls.
+</p>
+</div>
+
+<div class="section">
+<h1>🎯 Objectives & Goals</h1>
+<ul>
+<li>Provide deterministic keyword-based ranking</li>
+<li>Return only the top 3 most relevant records</li>
+<li>Support case-insensitive matching</li>
+<li>Expose summary and source references in JSON</li>
+<li>Implement a responsive, debounced user interface</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>✅ Acceptance Criteria</h1>
+<table>
+<tr><th>Rule</th><th>Requirement</th></tr>
+<tr><td>Ranking</td><td>“trust badges” returns id=1 as highest relevance</td></tr>
+<tr><td>Limit</td><td>Only 3 records maximum returned</td></tr>
+<tr><td>Validation</td><td>Empty query returns HTTP 400</td></tr>
+<tr><td>No Matches</td><td>Returns empty array with message</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h1>💻 Prerequisites</h1>
+<table>
+<tr><th>Component</th><th>Requirement</th></tr>
+<tr><td>Node.js</td><td>18+</td></tr>
+<tr><td>npm</td><td>9+</td></tr>
+<tr><td>OS</td><td>Windows 10/11 or Linux/macOS</td></tr>
+<tr><td>Port</td><td>3000</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h1>⚙️ Installation & Setup</h1>
+<ol>
+<li>Install Node.js and npm</li>
+<li>Clone the GitHub repository</li>
+<li>Run npm install</li>
+<li>Run npm run dev</li>
+<li>Open http://localhost:3000</li>
+</ol>
+</div>
+
+<div class="section">
+<h1>🔗 API Documentation</h1>
+<table>
+<tr><th>Property</th><th>Description</th></tr>
+<tr><td>Endpoint</td><td>POST /api/search</td></tr>
+<tr><td>Input</td><td>JSON { query: string }</td></tr>
+<tr><td>Output</td><td>results[], summary, sources[]</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h1>🖥️ UI / Frontend</h1>
+<ul>
+<li>Single page: app/page.tsx</li>
+<li>Uses fetch() to call API</li>
+<li>Debounce logic prevents excess calls</li>
+<li>Displays loading, empty, error and results states</li>
+<li>Styles controlled via Tailwind in globals.css</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🔢 Status Codes</h1>
+<table>
+<tr><th>Code</th><th>Meaning</th></tr>
+<tr><td>200</td><td>Success</td></tr>
+<tr><td>400</td><td>Empty query</td></tr>
+<tr><td>500</td><td>Server error</td></tr>
+</table>
+</div>
+
+<section>
+<h2>🚀 Features</h2>
+
+<p>
+The Mini Full-Stack Search Application is designed as a lightweight but production-grade search engine.  
+Each feature is implemented with deterministic behavior, scalable architecture, and frontend-backend orchestration.
+</p>
+
+<table>
+<tr><th>Layer</th><th>Feature</th><th>Technical Description</th></tr>
+
+<tr>
+<td>Frontend</td>
+<td>Debounced Real-Time Search</td>
+<td>User keystrokes are debounced before API invocation to prevent excessive server calls and improve UX responsiveness.</td>
+</tr>
+
+<tr>
+<td>Backend</td>
+<td>Relevance-Scored Search Engine</td>
+<td>Each dataset item is scored based on keyword frequency and match weight across title and body fields.</td>
+</tr>
+
+<tr>
+<td>API</td>
+<td>Stateless JSON Contract</td>
+<td>POST endpoint returns deterministic JSON with results, sources, and optional summary fields.</td>
+</tr>
+
+<tr>
+<td>Data</td>
+<td>In-Memory Indexed Dataset</td>
+<td>Records stored in data/data.ts are loaded once per request and processed in-memory for fast evaluation.</td>
+</tr>
+
+<tr>
+<td>UX</td>
+<td>Loading, Empty, Error States</td>
+<td>Frontend renders distinct UI states for pending, success, empty, and error responses.</td>
+</tr>
+
+<tr>
+<td>Deployment</td>
+<td>Serverless Ready</td>
+<td>API routes are compatible with Vercel Edge and Node runtimes for elastic scaling.</td>
+</tr>
+</table>
+
+<pre>
+User Typing
+    │
+    ▼
+Debounce Timer
+    │
+    ▼
+POST /api/search
+    │
+    ▼
+Scoring Engine → Ranking → JSON
+    │
+    ▼
+UI Rendering
+</pre>
+</section>
+
+<section>
+<h2>🧱 Tech Stack & Architecture</h2>
+
+<table>
+<tr><th>Layer</th><th>Technology</th><th>Responsibility</th></tr>
+<tr><td>UI</td><td>Next.js, TypeScript, Tailwind</td><td>User interface, input handling, rendering</td></tr>
+<tr><td>API</td><td>Next.js Route Handlers</td><td>Validation, scoring, ranking, JSON response</td></tr>
+<tr><td>Runtime</td><td>Node.js / Edge</td><td>Execution of serverless functions</td></tr>
+<tr><td>Data</td><td>TypeScript Dataset</td><td>Source of searchable records</td></tr>
+<tr><td>Build</td><td>Vercel / Next.js Compiler</td><td>Bundle, deploy, optimize</td></tr>
+</table>
+
+<pre>
+┌──────────────────────┐
+│  Browser (User)      │
+└─────────┬────────────┘
+          │
+          ▼
+┌──────────────────────┐
+│  Next.js Frontend    │
+│  (app/page.tsx)      │
+└─────────┬────────────┘
+          │ fetch()
+          ▼
+┌──────────────────────┐
+│  API Route           │
+│  /api/search         │
+└─────────┬────────────┘
+          │
+          ▼
+┌──────────────────────┐
+│  Scoring Engine      │
+│  data/data.ts        │
+└──────────────────────┘
+</pre>
+</section>
+
+
+<h2>🛠️ Workflow & Implementation</h2>
+
+<ol>
+<li>User enters a search term in the UI input field.</li>
+<li>Debounce logic waits for typing to pause.</li>
+<li>Frontend sends POST request to /api/search.</li>
+<li>API validates that query is not empty.</li>
+<li>Dataset is loaded from data/data.ts.</li>
+<li>Each record is scored against query tokens.</li>
+<li>Results are sorted by score descending.</li>
+<li>Top 3 results are selected.</li>
+<li>JSON response is generated with results, summary, and sources.</li>
+<li>UI renders results dynamically.</li>
+</ol>
+
+<pre>
+Input → Debounce → API Call → Validation → Scoring → Ranking → JSON → UI
+</pre>
+</section>
+
+<div class="section">
+<h1>🧪 Testing & Validation</h1>
+<table>
+<tr><th>ID</th><th>Area</th><th>Command</th><th>Expected</th><th>Explanation</th></tr>
+<tr><td>T1</td><td>API</td><td>POST trust</td><td>id=1</td><td>Top relevance</td></tr>
+<tr><td>T2</td><td>API</td><td>POST empty</td><td>400</td><td>Validation</td></tr>
+<tr><td>T3</td><td>UI</td><td>FORM</td><td>Results</td><td>Case-insensitive</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h1>🔍 Validation Summary</h1>
+<p>All acceptance criteria verified through UI, cURL, and API inspection.</p>
+</div>
+
+<div class="section">
+<h1>🧰 Verification Testing Tools & Command Examples</h1>
+<ul>
+<li>Browser DevTools</li>
+<li>cURL</li>
+<li>Network Inspector</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🧯 Troubleshooting & Debugging</h1>
+<ul>
+<li>404 errors indicate incorrect route path</li>
+<li>405 indicates wrong HTTP method</li>
+<li>Module errors indicate import path issues</li>
+<li>Restart Next.js server to clear cache</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🔒 Security & Secrets</h1>
+<p>No secrets or external APIs. Future integrations must use .env with gitignore.</p>
+</div>
+
+<div class="section">
+<h1>☁️ Deployment</h1>
+<ul>
+<li>Push to GitHub</li>
+<li>Connect repo to Vercel</li>
+<li>Automatic serverless build and deploy</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>⚡ Quick-Start Cheat Sheet</h1>
+<table>
+<tr><th>Action</th><th>Command</th></tr>
+<tr><td>Install</td><td>npm install</td></tr>
+<tr><td>Run</td><td>npm run dev</td></tr>
+<tr><td>Test</td><td>POST /api/search</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h1>🧾 Usage Notes</h1>
+<ul>
+<li>Always send POST requests</li>
+<li>Query must not be empty</li>
+<li>UI auto-updates results</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🧠 Performance & Optimization</h1>
+<ul>
+<li>Debounce reduces request volume</li>
+<li>In-memory dataset ensures low latency</li>
+<li>Edge deployment minimizes network hops</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🌟 Enhancements & Features</h1>
+<ul>
+<li>Fuzzy search engines</li>
+<li>Database persistence</li>
+<li>Result highlighting</li>
+<li>Analytics</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🧩 Maintenance & Future Work</h1>
+<ul>
+<li>Move to database</li>
+<li>Add CI/CD</li>
+<li>Add monitoring</li>
+</ul>
+</div>
+
+<div class="section">
+<h1>🏆 Key Achievements</h1>
+<ul>
+<li>100% compliance with spec</li>
+<li>Production-ready architecture</li>
+<li>Clean modular code</li>
+</ul>
+</div>
+
+<section>
+<h2>🧮 High-Level Architecture</h2>
+
+<pre>
+User
+  │
+  ▼
+Web Browser
+  │
+  ▼
+Next.js UI (page.tsx)
+  │
+  ▼
+POST /api/search
+  │
+  ▼
+Route Handler
+  │
+  ▼
+Dataset Loader
+  │
+  ▼
+Scoring Engine
+  │
+  ▼
+Ranking & Slicing
+  │
+  ▼
+JSON Response
+  │
+  ▼
+UI Rendering
+</pre>
+
+<p>
+This flow ensures strict separation of concerns: UI, API, data processing, and response formatting.
+</p>
+</section>
+
+
+<section>
+<h2>🗂️ Project Structure</h2>
+
+<pre>
+mini-fullstack-search-app/
 │
-├─ app/                          # Core application folder (App Router)
-│  ├─ api/
-│  │  └─ search/
-│  │     └─ route.ts             # API route (backend search logic)
-│  │
-│  ├─ favicon.ico                # App icon
-│  ├─ globals.css                # Tailwind + global styles
-│  ├─ layout.tsx                 # App layout wrapper
-│  └─ page.tsx                   # Frontend UI (main search interface)
+├── app/
+│   ├── api/
+│   │   └── search/
+│   │       └── route.ts        → Backend search logic
+│   │
+│   ├── layout.tsx             → App shell
+│   ├── page.tsx               → Search UI
+│   ├── globals.css            → Tailwind + global styles
+│   └── favicon.ico
 │
-├─ data/
-│  └─ data.ts                    # Local JSON dataset (searchable items)
+├── data/
+│   └── data.ts                → Search dataset
 │
-├─ public/                       # Static assets (images, icons, etc.)
+├── public/                    → Static assets
 │
-├─ node_modules/                 # Installed dependencies
+├── screenshots/               → UI and validation proof
 │
-├─ .gitignore                    # Git ignore rules
-├─ eslint.config.mjs             # ESLint configuration
-├─ next-env.d.ts                 # Next.js TypeScript environment file
-├─ next.config.ts                # Next.js configuration
-├─ package-lock.json             # Auto-generated dependency lockfile
-├─ package.json                  # Dependencies and scripts
-├─ postcss.config.mjs            # PostCSS configuration
-├─ tailwind.config.ts            # Tailwind CSS setup
-├─ tsconfig.json                 # TypeScript compiler options
-│
-├─ screenshots/                  # App verification & testing screenshots
-│
-└─ technical_project_details.pdf # Complete technical report
+├── package.json               → Dependencies & scripts
+├── next.config.ts             → Next.js configuration
+├── tailwind.config.ts         → Tailwind setup
+├── tsconfig.json              → TypeScript configuration
+├── eslint.config.mjs
+├── postcss.config.mjs
+├── next-env.d.ts
+└── technical_project_details.pdf
+</pre>
 
+<p>
+This structure cleanly separates UI, API, data, and configuration, enabling maintainability and enterprise-grade scalability.
+</p>
+</section>
 
-### 💡 Summary
+<div class="section">
+<h1>🧭 How to Demonstrate Live</h1>
+<ol>
+<li>npm install</li>
+<li>npm run dev</li>
+<li>Open localhost:3000</li>
+<li>Search “trust”</li>
+</ol>
+</div>
 
-This implementation meets all project goals and evaluation criteria, demonstrating a complete, production-ready mini full-stack application.
+<div class="section">
+<h1>💡 Summary, Closure & Compliance</h1>
+<p>
+This system fulfills all technical, architectural, and functional requirements of a modern full-stack search platform.
+It demonstrates proper API design, UI-backend orchestration, performance controls, and deployment readiness.
+</p>
+</div>
+
+</body>
+</html>
